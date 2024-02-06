@@ -3,23 +3,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Common functions for problems 1,2,3
 def mutate(child, mutation_rate):
-    if random.uniform(0, 1) < mutation_rate:
-        previous_flip_bit = -1
-        # Randomly flip two bits
-        for _ in range(2):
-            flip_bit = previous_flip_bit;
-            while flip_bit == previous_flip_bit:
-                flip_bit = random.randint(0, len(child) - 1)
-            replacement = '1' if child[flip_bit] == '0' else '0'
-            child = child[:flip_bit] + replacement + child[flip_bit + 1:]
-        return child
+    new_child = ''
+    for x in child:
+        if random.uniform(0, 1) < mutation_rate:
+            new_child += '1' if x == '0' else '0'
+        else:
+            new_child += x
     return child
 
 
 def crossover(parent_1, parent_2, crossover_rate, n_bits):
     if random.uniform(0, 1) < crossover_rate:
-        crossover_point = random.randint(0, n_bits - 1)
+        crossover_point = random.randint(0, n_bits - 2)
         child_1 = parent_1[:crossover_point] + parent_2[crossover_point:]
         child_2 = parent_2[:crossover_point] + parent_1[crossover_point:]
 
@@ -77,4 +74,4 @@ def one_max_ga(fitness, n_bits, n_init_pop, generations, tournament_size, crosso
             children.append(child2)
         generation_fitness.append(pop_fitness(children, fitness))
         pop = [mutate(child, mutation_rate) for child in children]
-    plot_generation_fitness(generation_fitness)
+    return pop, generation_fitness
