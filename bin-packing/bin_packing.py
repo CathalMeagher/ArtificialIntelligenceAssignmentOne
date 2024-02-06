@@ -151,7 +151,7 @@ if __name__ == "__main__":
     bpp_problems = load_problems()
     for idx, problem in enumerate(bpp_problems):
         # Calculate the average fitness of each problem and plot
-        capacity = problem['capacity']
+        capacity = int(problem['capacity'])
         best_solution_num_of_bins, avg_fitness_over_generations = binpacking_ga(problem)
         print(f"Problem {idx+1} solved with bins: {best_solution_num_of_bins}")
         plt.plot(avg_fitness_over_generations, label=f"Problem: {idx + 1}")
